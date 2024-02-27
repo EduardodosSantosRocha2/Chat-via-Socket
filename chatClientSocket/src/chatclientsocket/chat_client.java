@@ -10,6 +10,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -23,6 +25,10 @@ public class chat_client extends javax.swing.JFrame {
     static Socket s;
     static DataInputStream din;
     static DataOutputStream dout;
+    static String numeroIP ;
+    static String porta ;
+    static int portaInt;
+    
     public chat_client() {
         initComponents();
          try 
@@ -92,9 +98,9 @@ public class chat_client extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(Client, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(11, 11, 11)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(msg_text, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(msg_send))
@@ -102,6 +108,7 @@ public class chat_client extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void msg_sendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_msg_sendActionPerformed
@@ -148,16 +155,31 @@ public class chat_client extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
+        
+
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new chat_client().setVisible(true);
+            public void run() {             
+                
             }
         });
         
+        
+        
+        numeroIP = JOptionPane.showInputDialog( " Digite o número de IP " );;
+
+        porta = JOptionPane.showInputDialog( " Digite o número de porta " );;
+        portaInt = Integer.parseInt(porta);
+        
+        System.out.println(numeroIP);
+        
+        System.out.println(portaInt);
+        new chat_client().setVisible(true);
+
        try{
-          s = new Socket("127.0.0.1", 1201); //Isso é o endereço IP local addr. Devido ao motivo de rodarmos cliente e servidor no mesmo computador.
+
+          s = new Socket(numeroIP, portaInt); //Isso é o endereço IP local addr. Devido ao motivo de rodarmos cliente e servidor no mesmo computador.
           din = new DataInputStream(s.getInputStream());
           dout = new DataOutputStream(s.getOutputStream());
           String msgin = "";
